@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", "Georgia", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --color-ivory: #FFFEF7;
+  --color-ivory-warm: #FFFCF7;
+  --color-ivory-card: #FFFFFF;
+  --color-champagne: #C9A96E;
+  --color-champagne-light: #D4B87A;
+  --color-champagne-dark: #A68B5B;
+  --color-gold-shimmer: #E8D5A3;
+  --color-stone: #8B7D6B;
+  --color-stone-dark: #5C5248;
+  --color-charcoal: #2C2824;
+  --color-charcoal-deep: #1A1714;
+  --color-maroon: #4A121A;
+  --color-maroon-dark: #2D080D;
+  --color-maroon-light: #6E1B27;
+  --color-maroon-subtle: rgba(74, 18, 26, 0.4);
+
+  --ease-door: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-ivory-warm);
+    color: var(--color-charcoal);
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  #root {
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: var(--color-champagne);
+    color: var(--color-charcoal-deep);
+  }
+}
+
+@layer components {
+  /* Door texture — layered gradients simulating stone grain */
+  .door-panel {
+    background:
+      /* top light catch */
+      linear-gradient(180deg,
+        rgba(255, 254, 247, 0.04) 0%,
+        transparent 8%),
+      /* vertical stone grain */
+      repeating-linear-gradient(180deg,
+        rgba(201, 169, 110, 0.02) 0px,
+        transparent 2px,
+        transparent 6px,
+        rgba(201, 169, 110, 0.015) 8px),
+      /* warm champagne tint gradient */
+      linear-gradient(180deg,
+        rgba(201, 169, 110, 0.07) 0%,
+        rgba(201, 169, 110, 0.02) 25%,
+        rgba(201, 169, 110, 0.04) 50%,
+        rgba(201, 169, 110, 0.02) 75%,
+        rgba(201, 169, 110, 0.08) 100%),
+      /* horizontal light variation */
+      linear-gradient(90deg,
+        rgba(255, 254, 247, 0.01) 0%,
+        rgba(255, 254, 247, 0.04) 50%,
+        rgba(255, 254, 247, 0.01) 100%),
+      /* base color */
+      #2A2621;
+    border: 1px solid rgba(201, 169, 110, 0.12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Outer panel inset border */
+  .door-panel::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(201, 169, 110, 0.08);
+    pointer-events: none;
+  }
+
+  /* Inner panel inset border */
+  .door-panel::after {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(201, 169, 110, 0.05);
+    pointer-events: none;
+  }
+
+  /* Door handle — vertical bar */
+  .door-handle {
+    width: 5px;
+    height: 44px;
+    background: linear-gradient(180deg,
+      var(--color-champagne-light),
+      var(--color-champagne),
+      var(--color-champagne-dark));
+    border-radius: 2.5px;
+    box-shadow:
+      0 0 8px rgba(201, 169, 110, 0.25),
+      0 0 20px rgba(201, 169, 110, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  /* Ornamental divider line */
+  .ornament-line {
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--color-champagne),
+      transparent);
+  }
+
+  /* Tap cue ring */
+  .tap-cue-ring {
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    border-radius: 9999px;
+  }
+
+
+  /* Royal invitation card with frosted glass aesthetic */
+  .invitation-card {
+    background:
+      linear-gradient(135deg, rgba(248, 241, 231, 0.78) 0%, rgba(255, 252, 247, 0.82) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 169, 110, 0.38);
+    box-shadow:
+      0 12px 36px rgba(74, 18, 26, 0.07),
+      0 2px 10px rgba(0, 0, 0, 0.03),
+      0 0 0 1px rgba(201, 169, 110, 0.16),
+      inset 0 0 24px rgba(201, 169, 110, 0.05);
+  }
+
+  /* Frosted glass event sub-card */
+  .frosted-glass-card {
+    background: rgba(248, 241, 231, 0.74);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    box-shadow:
+      0 4px 16px rgba(74, 18, 26, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+}
+
+@layer utilities {
+  .text-shadow-warm {
+    text-shadow: 0 1px 2px rgba(74, 18, 26, 0.12);
+  }
+
+  section[id] {
+    scroll-margin-top: 2rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
